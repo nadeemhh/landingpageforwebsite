@@ -108,5 +108,67 @@ const port = process.env.PORT || 3600
 
   
    })
+
+
+   app.get('/zero', (req, res) => {
+
+  
+
+ fs.readFile('user-footprint.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  
+    // Parse the JSON data into an object
+    let jsonData = JSON.parse(data);
+jsonData.visiter_count=0;
+
+  // Convert the object back to JSON string
+  let updatedData = JSON.stringify(jsonData, null, 2);
+  
+  // Write the updated JSON string back to the file
+  fs.writeFile('user-footprint.json', updatedData, 'utf8', (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log('visiter_count updated successfully');
+   
+  });
+
+
+  fs.readFile('language-conversion-count.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  
+    // Parse the JSON data into an object
+    let jsonData = JSON.parse(data);
+jsonData.language_conversion_count=0;
+
+// Convert the object back to JSON string
+let updatedData = JSON.stringify(jsonData, null, 2);
+  
+// Write the updated JSON string back to the file
+fs.writeFile('language-conversion-count.json', updatedData, 'utf8', (err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  console.log('language-Conversion-Count updated successfully');
+  res.send('done')
+});
+
+  });
+
+
+  });
+
+  
+   })
 app.listen(port)
 
